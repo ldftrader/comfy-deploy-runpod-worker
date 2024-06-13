@@ -1,4 +1,4 @@
-	# Use Nvidia CUDA base image
+# Use Nvidia CUDA base image
 FROM nvidia/cuda:11.8.0-cudnn8-runtime-ubuntu22.04 as base
 
 # Prevents prompts from packages asking for user input during installation
@@ -25,10 +25,10 @@ RUN git clone https://github.com/comfyanonymous/ComfyUI.git /comfyui
 WORKDIR /comfyui
 
 # Install ComfyUI dependencies
-RUN pip3 install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cu121
-RUN pip3 install --no-cache-dir torchvision --index-url https://download.pytorch.org/whl/cu121
-RUN pip3 install --no-cache-dir torchaudio --index-url https://download.pytorch.org/whl/cu121
-RUN pip3 install --no-cache-dir xformers==0.0.21
+RUN pip3 install --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121 \
+    && pip3 install --no-cache-dir xformers==0.0.21 \
+    && pip3 install -r requirements.txt \
+    && pip3 install --no-cache-dir xformers==0.0.21
 RUN pip3 install -r requirements.txt
 
 # Clone the repositories
